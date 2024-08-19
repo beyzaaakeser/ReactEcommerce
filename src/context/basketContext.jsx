@@ -31,7 +31,7 @@ export const BasketProvider = ({ children }) => {
     }
   };
 
-  console.log(basket);
+  
 
   const removeFromBasket = () => {};
 
