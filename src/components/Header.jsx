@@ -4,9 +4,9 @@ import {
   DisclosureButton,
   DisclosurePanel,
 } from '@headlessui/react';
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Link, NavLink } from 'react-router-dom';
-import { BsCart4 } from "react-icons/bs";
+import { BsCart4 } from 'react-icons/bs';
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -42,11 +42,13 @@ const Header = () => {
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex flex-shrink-0 items-center">
-              <img
-                alt="Your Company"
-                src="/src/assets/img/logo.png"
-                className="h-10 w-auto"
-              />
+              <Link to={"/"}>
+                <img
+                  alt="Your Company"
+                  src="/src/assets/img/logo.png"
+                  className="h-10 w-auto cursor-pointer"
+                />
+              </Link>
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
@@ -73,7 +75,7 @@ const Header = () => {
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <Link to={'/basket'}>
-              <div className="relative flex items-center text-gray-300 group hover:text-white cursor-pointer font-semibold">
+              <div className="relative flex items-center text-gray-300 group hover:bg-gray-700 px-2 py-1 rounded-md hover:text-white cursor-pointer font-semibold">
                 {/* Basket text */}
                 <span className="mr-1 group-hover:text-white">Basket</span>
                 {/* Notification button */}
@@ -83,7 +85,7 @@ const Header = () => {
                 >
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">View notifications</span>
-                  <BsCart4 
+                  <BsCart4
                     aria-hidden="true"
                     className="h-6 w-6 group-hover:text-white"
                   />
