@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Disclosure,
   DisclosureButton,
@@ -7,12 +7,9 @@ import {
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Link, NavLink } from 'react-router-dom';
 import { BsCart4 } from 'react-icons/bs';
-import {BasketContext} from "../context/basketContext.jsx";
+import { BasketContext } from '../context/basketContext.jsx';
 
-const navigation = [
-  { name: 'Home', href: '/' },
-  { name: 'Products', href: '/products' },
-];
+const navigation = [{ name: 'Home', href: '/' }];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -22,11 +19,9 @@ const Header = () => {
   // State to track the current active item
   const [currentPath, setCurrentPath] = useState('/');
 
-  const {basket} = useContext(BasketContext);
+  const { basket } = useContext(BasketContext);
 
   const totalProducts = basket.reduce((a, b) => a + b.amount, 0);
-
-
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -49,7 +44,7 @@ const Header = () => {
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex flex-shrink-0 items-center">
-              <Link to={"/"}>
+              <Link to={'/'}>
                 <img
                   alt="Your Company"
                   src="/src/assets/img/logo.png"
@@ -90,13 +85,15 @@ const Header = () => {
                   type="button"
                   className="relative rounded-full bg-gray-800 p-1 text-gray-400 group-hover:text-white focus:outline-none"
                 >
-
-                  {basket.length > 0 && <span
-                      className="absolute top-[-10px] left-2 text-blue-600 font-bold bg-gray-200 px-[7px] rounded-full ">{totalProducts}</span>}
+                  {basket.length > 0 && (
+                    <span className="absolute top-[-10px] left-2 text-blue-600 font-bold bg-gray-200 px-[7px] rounded-full ">
+                      {totalProducts}
+                    </span>
+                  )}
 
                   <BsCart4
-                      aria-hidden="true"
-                      className="h-7 w-7 group-hover:text-white relative z-10"
+                    aria-hidden="true"
+                    className="h-7 w-7 group-hover:text-white relative z-10"
                   />
                 </button>
               </div>
