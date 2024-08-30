@@ -1,73 +1,74 @@
-import React, { useContext, useState } from 'react';
-import { BasketContext } from '../context/basketContext';
-import { Link } from 'react-router-dom';
-import { IoCartOutline } from 'react-icons/io5';
-import { BsBoxArrowRight } from 'react-icons/bs';
+// eslint-disable-next-line no-unused-vars
+import React, {useContext, useState} from 'react';
+import {BasketContext} from '../context/basketContext';
+import {Link} from 'react-router-dom';
+import {IoCartOutline} from 'react-icons/io5';
+import {BsBoxArrowRight} from 'react-icons/bs';
+import BasketItems from "../components/BasketItems.jsx";
+import {useNavigate} from "react-router";
 
 const Basket = () => {
-  const { basket } = useContext(BasketContext);
+    const {basket, confirmOrder, fullRemoveBasket} = useContext(BasketContext);
 
-  console.log(basket);
-  return (
-    <div className="page">
-      {basket.length === 0 && (
-        <div className="flex flex-col gap-5 justify-center items-center mt-10">
-          <span className="text-2xl font-medium ">
-            {' '}
-            <IoCartOutline className="m-auto text-5xl" /> Your basket is empty.
-          </span>
-          <div className="flex bg-blue-500 text-white p-2 px-5 rounded-md hover:bg-blue-700  cursor-pointer items-center justify-center gap-3">
-            <Link to="/" className=" ">
-              Continue shopping
-            </Link>
-            <BsBoxArrowRight className="text-2xl" />
-          </div>
-        </div>
-      )}
+    const navigate = useNavigate();
 
-      {basket?.map((product) => (
-        <div
-          key={product.id}
-          className="flex my-5 w-full md:w-[70vw]   m-auto border border-gray-200 rounded-md p-6"
-        >
-          <div className="h-36 w-36  overflow-hidden rounded-md border border-gray-200">
-            <img
-              alt={product.imageAlt}
-              src={product.thumbnail}
-              className="h-full w-full object-cover object-center"
-            />
-          </div>
+    const totalProducts = basket.reduce((a, b) => a + b.amount, 0);
 
-          <div className="ml-4 flex flex-1 flex-col justify-between">
-            <div>
-              <div className="flex justify-between text-base font-medium text-gray-900">
-                <h2 className="line-clamp-1 text-[20px]">{product.title}</h2>
-                <p className="ml-4 text-nowrap text-[16px]">{product.price}$</p>
-              </div>
+    console.log(basket)
+    const totalBasketPrice = basket.reduce((a, b) => a + b.amount * b.price, 0).toFixed(2);
+
+    const handleClick = () =>{
+
+        navigate('/payment')
+    }
+
+    return (
+
+        <div className='flex flex-col min-h-[75vh]'>
+            <div className=" grow ">
+                {basket.length === 0 && (
+                    <div className="flex flex-col gap-5 justify-center items-center mt-10">
+                    <span className="text-2xl font-medium ">
+                          <IoCartOutline className="m-auto text-5xl"/> Your basket is empty.
+                    </span>
+                        <div
+                            className="flex bg-blue-500 text-white p-2 px-5 rounded-md hover:bg-blue-700  cursor-pointer items-center justify-center gap-3">
+                            <Link to="/" className=" ">
+                                Continue shopping
+                            </Link>
+                            <BsBoxArrowRight className="text-2xl"/>
+                        </div>
+                    </div>
+                )}
+
+                {basket?.map((product) =>
+                    <BasketItems key={product.id} product={product}/>
+                )}
+
+                {basket.length !== 0 &&
+                    <div
+                        className='w-full max-w-[1280px] m-auto h-40 border-t border-b-gray-400 p-4 flex flex-col gap-3 '>
+                        <div className='border-b border-gray-200 py-3 flex justify-between'><span
+                            className='text-gray-600'>Number of items in the cart</span> <span
+                            className='font-bold'>{totalProducts}</span></div>
+                        <div className='border-b border-gray-200 py-3 flex justify-between '><span
+                            className='font-bold text-gray-600 text-xl'>Total basket price</span> <span
+                            className='font-bold text-xl'>{(totalBasketPrice)}<span
+                            className='font-semibold'>$</span></span></div>
+
+                    </div>
+
+                }
+
+                {basket.length !== 0 &&
+                    <div className='w-full max-w-[1200px] pe-10 mt-5 mb-10 m-auto text-end'>
+                        <span onClick={handleClick}
+                              className='py-2 px-5 bg-amber-200 rounded-full border border-amber-700 hover:bg-amber-400'>Confirm order</span>
+                    </div>}
             </div>
-            <div className="flex gap-4 items-center">
-              <p className="text-gray-500">Amount: {product.amount}</p>
-              <div className="flex space-x-1">
-                <button className="px-3 py-1 w-8 h-8 text-white bg-blue-500 rounded hover:bg-blue-600">
-                  +
-                </button>
-                <button className="px-3 py-1 w-8 h-8 text-white bg-red-500 rounded hover:bg-red-600">
-                  -
-                </button>
-              </div>
-            </div>
-
-            <button
-              type="button"
-              className="font-medium text-indigo-600 hover:text-indigo-500 text-end"
-            >
-              Remove
-            </button>
-          </div>
         </div>
-      ))}
-    </div>
-  );
+
+    );
 };
 
 export default Basket;

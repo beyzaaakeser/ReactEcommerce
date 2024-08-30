@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useContext, useState} from 'react';
 import {
   Disclosure,
   DisclosureButton,
@@ -7,6 +7,7 @@ import {
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Link, NavLink } from 'react-router-dom';
 import { BsCart4 } from 'react-icons/bs';
+import {BasketContext} from "../context/basketContext.jsx";
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -21,9 +22,15 @@ const Header = () => {
   // State to track the current active item
   const [currentPath, setCurrentPath] = useState('/');
 
+  const {basket} = useContext(BasketContext);
+
+  const totalProducts = basket.reduce((a, b) => a + b.amount, 0);
+
+
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
-      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+      <div className="mx-auto px-2 sm:px-0 max-w-[1280px]">
         <div className="relative flex h-16 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
             {/* Mobile menu button*/}
@@ -83,11 +90,13 @@ const Header = () => {
                   type="button"
                   className="relative rounded-full bg-gray-800 p-1 text-gray-400 group-hover:text-white focus:outline-none"
                 >
-                  <span className="absolute -inset-1.5" />
-                  <span className="sr-only">View notifications</span>
+
+                  {basket.length > 0 && <span
+                      className="absolute top-[-10px] left-2 text-blue-600 font-bold bg-gray-200 px-[7px] rounded-full ">{totalProducts}</span>}
+
                   <BsCart4
-                    aria-hidden="true"
-                    className="h-6 w-6 group-hover:text-white"
+                      aria-hidden="true"
+                      className="h-7 w-7 group-hover:text-white relative z-10"
                   />
                 </button>
               </div>

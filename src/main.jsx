@@ -4,10 +4,11 @@ import './index.css';
 import { ProductProvider } from './context/productContext.jsx';
 import { BasketProvider } from './context/basketContext.jsx';
 
+
 createRoot(document.getElementById('root')).render(
   <ProductProvider>
-    <BasketProvider>
-      <App />
-    </BasketProvider>
+        <BasketProvider>
+           <App />
+        </BasketProvider>
   </ProductProvider>
 );
